@@ -1,0 +1,20 @@
+body{
+  background: black;
+}
+
+#inputText, #chatLog{
+  border: solid 1px green;
+  width: 100%;
+}
+#chatLog{
+  height: 200px;
+  width: 82%;
+}
+
+#chatUsers{
+  float:right;
+  height: 200px;
+  width: 15%;
+  border: 1px solid green;
+  background: whitesmoke;
+}
