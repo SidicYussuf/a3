@@ -11,10 +11,19 @@ body{
   width: 82%;
 }
 
-#chatUsers{
+/*#chatUsers{*/
+  /*float:right;*/
+  /*height: 200px;*/
+  /*width: 15%;*/
+  /*border: 1px solid green;*/
+  /*background: whitesmoke;*/
+/*}*/
+
+.chat-users-wrapper{
   float:right;
   height: 200px;
   width: 15%;
   border: 1px solid green;
   background: whitesmoke;
 }
+

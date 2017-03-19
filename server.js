@@ -74,6 +74,10 @@ io.on("connection", function(socket) {
         io.emit("message", timestamp() + ": " + socket.username + " disconnected.");
     });
 
+    socket.on("privateChat", function(data) {
+        socket.broadcast.emit("privateChatMsg", data);
+    });
+
 });
 
 function timestamp() {
@@ -87,3 +91,4 @@ function getUserList() {
     }
     return ret;
 }
+
