@@ -25,7 +25,7 @@ $(document).ready(function () {
     //My private channel socket
     socket.on("privateChatMsg", function (data) {
         if (data.recipient == username) {
-            var reply = prompt(data.message);
+            var reply = prompt("Message From: " + data.recipient, data.message);
             if (reply) {
                 socket.emit("privateMessage", {
                     username: username,
@@ -49,7 +49,7 @@ $(document).ready(function () {
     });
 
     /*Handler to create private chat*/
-    $("#chatUsers").dblclick(function (e) {
+    $("#unblocked").dblclick(function (e) {
         var recipient = e.target.id;
         var message = window.prompt('Enter your message to ' + recipient);
 
@@ -63,7 +63,7 @@ $(document).ready(function () {
     });
 
     /*Handler to blocking user*/
-    $("#chatUsers").mousedown(function (e) {
+    $("#unblocked").mousedown(function (e) {
         if (e.shiftKey) {
             var userToBlock = e.target.id;
             var arrayOfUpdatedContacts = _.filter(myContacts.contacts, function (contact) {
@@ -74,14 +74,47 @@ $(document).ready(function () {
             myContacts.blockedContacts.push(userToBlock);
 
             updateContactListView(myContacts.contacts);
+
+
+            $("#blocked").html('');
+            myContacts.blockedContacts.forEach(function (user) {
+                $("#blocked").append("<li id=" + user + ">" + user + "</li>");
+            });
+        }
+    });
+
+
+    /*Handler to unblocking user*/
+    $("#blocked").mousedown(function (e) {
+        if (e.shiftKey) {
+            var userToUnBlock = e.target.id;
+
+            myContacts.contacts.push({
+                username: userToUnBlock,
+                privateUsers: []
+            });
+
+            myContacts.blockedContacts = _.filter(myContacts.blockedContacts, function (contact) {
+                return contact !== userToUnBlock;
+            });
+
+            $("#blocked").html('');
+            myContacts.blockedContacts.forEach(function (user) {
+                $("#blocked").append("<li id=" + user + ">" + user + "</li>");
+            });
+
+            $("#unblocked").html('');
+            myContacts.contacts.forEach(function (user) {
+                $("#unblocked").append("<li id=" + user.username + ">" + user.username + "</li>");
+            });
         }
     });
 
     function updateContactListView(users) {
-        $("#chatUsers").html('');
+        $("#unblocked").html('');
         users.forEach(function (user) {
             if (user.username !== username) {
-                $("#chatUsers").append("<li id=" + user.username + ">" + user.username + "</li>");
+                $("#unblocked").append("<li id=" + user.username + ">" + user.username + "</li>");
             }
         });
     }

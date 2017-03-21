@@ -9,11 +9,35 @@
     <script src="chatRoom.js"></script>
     <script src="lodash.core.js"></script>
 </head>
-<body>
-<div class="chat-users-wrapper">
-    <ul id="chatUsers"></ul>
+<body style="background-color: white;">
+
+<div id="chat-log-wrapper">
+    <textarea id="chatLog"></textarea>
 </div>
-<textarea id="chatLog"></textarea>
-<input id="inputText">
+
+<div id="unblocked-wrapper">
+    <h3>My contacts</h3>
+    <ul id="unblocked"></ul>
+</div>
+
+<div id="blocked-wrapper">
+    <h3>Blocked</h3>
+    <ul id="blocked"></ul>
+</div>
+
+<div id="chat-wrapper">
+    <h4 style="color: black"> Enter chat message</h4>
+    <input id="inputText">
+</div>
+
+<!--<div class="unblocked-users-wrapper">-->
+<!--<ul id="unblocked"></ul>-->
+<!--</div>-->
+
+<!--<div class="blocked-users-wrapper">-->
+<!--<ul id="blocked"></ul>-->
+<!--</div>-->
+<!--<textarea id="chatLog"></textarea>-->
+
 </body>
 </html>

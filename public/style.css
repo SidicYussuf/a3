@@ -1,29 +1,76 @@
-body{
-  background: black;
+body {
+    background: black;
 }
 
-#inputText, #chatLog{
-  border: solid 1px green;
-  width: 100%;
+#chatLog {
+    height: 10%;
+    border: solid 1px green;
+    width: 100%;
 }
-#chatLog{
-  height: 200px;
-  width: 82%;
+
+#chat-log-wrapper {
+    width: 50%;
+    float: left;
+    height: 200px;
+}
+
+#unblocked-wrapper {
+    width: 20%;
+    float: left;
+    height: 200px;
+    background-color: white;
+    border: 1px solid gray;
+    padding: 2px;
+}
+
+#blocked-wrapper {
+    width: 20%;
+    float: right;
+    height: 200px;
+    background-color: white;
+    border: 1px solid gray;
+    padding: 2px;
+}
+
+#chatLog {
+    height: 100%;
+    width: 100%;
+}
+
+
+#chat-wrapper{
+    position: absolute;
+    top:50%;
+    height: 15%;
+    width: 100%;
+}
+
+#inputText{
+    height: 80%;
+    width: 80%;
 }
 
 /*#chatUsers{*/
-  /*float:right;*/
-  /*height: 200px;*/
-  /*width: 15%;*/
-  /*border: 1px solid green;*/
-  /*background: whitesmoke;*/
+/*float:right;*/
+/*height: 200px;*/
+/*width: 15%;*/
+/*border: 1px solid green;*/
+/*background: whitesmoke;*/
 /*}*/
 
-.chat-users-wrapper{
-  float:right;
-  height: 200px;
-  width: 15%;
-  border: 1px solid green;
-  background: whitesmoke;
+.unblocked-users-wrapper {
+    float: right;
+    height: 90%;
+    width: 20%;
+    border: 1px solid green;
+    background: whitesmoke;
+}
+
+.blocked-users-wrapper {
+    float: right;
+    height: 90%;
+    width: 20%;
+    border: 1px solid green;
+    background: whitesmoke;
 }
 
