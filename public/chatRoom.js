@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var username = prompt("What's your name?");
+    var myContacts = {contacts: [], blockedContacts: []};
     var socket = io(); //connect to the server that sent this page
 
     socket.on('connect', function () {
@@ -12,14 +13,8 @@ $(document).ready(function () {
     });
 
     socket.on('updateChatRoom', function (users) {
-        console.log(users);
-
-        $("#chatUsers").html('');
-        users.forEach(function (user) {
-            if (user.username !== username) {
-                $("#chatUsers").append("<li id=" + user.username + ">" + user.username + "</li>");
-            }
-        });
+        myContacts.contacts = users;
+        updateContactListView(users);
     });
 
     socket.on("message", function (data) {
@@ -29,11 +24,18 @@ $(document).ready(function () {
 
     //My private channel socket
     socket.on("privateChatMsg", function (data) {
-        if (data.username == userName) {
-            console.log(data.message)
+        if (data.recipient == username) {
+            var reply = prompt(data.message);
+            if (reply) {
+                socket.emit("privateMessage", {
+                    username: username,
+                    recipient: data.username,
+                    message: reply
+                });
+            }
         }
     });
-    
+
     //////////////////////////////////////////////////
 
     $('#inputText').keypress(function (ev) {
@@ -48,12 +50,40 @@ $(document).ready(function () {
 
     /*Handler to create private chat*/
     $("#chatUsers").dblclick(function (e) {
-        var username = e.target.id;
-        var message = window.prompt('Enter your message to ' + username);
+        var recipient = e.target.id;
+        var message = window.prompt('Enter your message to ' + recipient);
 
-        if (message != null) {
-            socket.emit("privateMessage", {username: username, message: message});
+        if (message) {
+            socket.emit("privateMessage", {
+                username: username,
+                recipient: recipient,
+                message: message
+            });
         }
     });
+
+    /*Handler to blocking user*/
+    $("#chatUsers").mousedown(function (e) {
+        if (e.shiftKey) {
+            var userToBlock = e.target.id;
+            var arrayOfUpdatedContacts = _.filter(myContacts.contacts, function (contact) {
+                return contact.username !== userToBlock;
+            });
+
+            myContacts.contacts = arrayOfUpdatedContacts;
+            myContacts.blockedContacts.push(userToBlock);
+
+            updateContactListView(myContacts.contacts);
+        }
+    });
+
+    function updateContactListView(users) {
+        $("#chatUsers").html('');
+        users.forEach(function (user) {
+            if (user.username !== username) {
+                $("#chatUsers").append("<li id=" + user.username + ">" + user.username + "</li>");
+            }
+        });
+    }
 
 });
